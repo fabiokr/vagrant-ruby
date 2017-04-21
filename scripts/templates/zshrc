@@ -1,0 +1,30 @@
+# Set up the prompt
+
+autoload -Uz promptinit
+promptinit
+prompt adam1
+
+setopt histignorealldups sharehistory
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Colors
+autoload -U colors
+colors
+setopt prompt_subst
+
+# Show completion on first TAB
+setopt menucomplete
+
+# Use modern completion system
+autoload -Uz compinit
+compinit
+
+# ls alias to enable colors by default
+alias ls="${aliases[ls]:-ls} --color=auto"
+
+# include vagrant user rubygems on PATH
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
