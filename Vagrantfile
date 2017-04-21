@@ -6,6 +6,8 @@ Vagrant.configure("2") do |config|
 
   # copy templates for provision
   config.vm.provision "file", source: "scripts/templates/zshrc", destination: "/tmp/provision/zshrc"
+  config.vm.provision "file", source: "scripts/templates/gems/gemrc", destination: "/tmp/provision/gemrc"
+  config.vm.provision "file", source: "scripts/templates/gems/bundle-config", destination: "/tmp/provision/bundle"
   config.vm.provision "file", source: "scripts/templates/nginx/nginx.conf", destination: "/tmp/provision/nginx.conf"
 
   # system provision
