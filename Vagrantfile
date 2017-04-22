@@ -2,13 +2,23 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   config.vm.box = "bento/ubuntu-16.04"
-  config.vm.synced_folder "apps", "/home/vagrant/apps"
+
+  # Configure shared folder
+  # {
+  #   "../apps-dir" => "/home/vagrant/apps"
+  # }.each do |src, dest|
+  #   config.vm.synced_folder src, dest
+  # end
 
   # copy templates for provision
-  config.vm.provision "file", source: "scripts/templates/zshrc", destination: "/tmp/provision/zshrc"
-  config.vm.provision "file", source: "scripts/templates/gems/gemrc", destination: "/tmp/provision/gemrc"
-  config.vm.provision "file", source: "scripts/templates/gems/bundle-config", destination: "/tmp/provision/bundle"
-  config.vm.provision "file", source: "scripts/templates/nginx/nginx.conf", destination: "/tmp/provision/nginx.conf"
+  {
+    "scripts/templates/zshrc" => "/tmp/provision/zshrc",
+    "scripts/templates/gems/gemrc" => "/tmp/provision/gemrc",
+    "scripts/templates/gems/bundle-config" => "/tmp/provision/bundle",
+    "scripts/templates/nginx/nginx.conf" => "/tmp/provision/nginx.conf",
+  }.each do |src, dest|
+    config.vm.provision "file", source: src, destination: dest
+  end
 
   # system provision
   config.vm.provision "shell", path: "scripts/root-provision.sh"
