@@ -94,6 +94,9 @@ packages=(
   libfreetype6-dev
   libfontconfig1
   libfontconfig1-dev
+
+  # nfs client
+  nfs-common
 )
 
 apt -y -qq install ${packages[@]}
