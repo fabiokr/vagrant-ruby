@@ -16,9 +16,6 @@ Vagrant.configure("2") do |config|
     "scripts/templates/gems/gemrc" => "/tmp/provision/gemrc",
     "scripts/templates/gems/bundle-config" => "/tmp/provision/bundle",
     "scripts/templates/nginx/nginx.conf" => "/tmp/provision/nginx.conf",
-    "~/.gitconfig" => "/tmp/provision/gitconfig",
-    "~/bin/git-pretty-log" => "/tmp/provision/git-pretty-log",
-    "~/bin/git-sweep" => "/tmp/provision/git-sweep",
   }.each do |src, dest|
     config.vm.provision "file", source: src, destination: dest
   end
