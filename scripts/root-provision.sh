@@ -66,9 +66,9 @@ packages=(
   wamerican
 
   # postgres database
-  postgresql-9.5
+  postgresql-9.4
   # postgres extensions
-  postgresql-contrib-9.5
+  postgresql-contrib-9.4
   # postgres driver lib
   libpq-dev
   # key store server
