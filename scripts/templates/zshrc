@@ -24,6 +24,7 @@ alias ls="${aliases[ls]:-ls} --color=auto"
 alias g="git"
 
 # include vagrant user rubygems on PATH
+PATH="/home/vagrant/bin:$PATH"
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 # Prompt format
