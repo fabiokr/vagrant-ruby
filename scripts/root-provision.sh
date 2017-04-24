@@ -11,6 +11,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 UBUNTU_CODENAME=$(lsb_release --codename | cut -f2)
 
+echo "Configuring locale"
+echo 'LC_ALL="en_US.utf8"' >> /etc/environment
+
 echo "Forward ssh"
 echo "Defaults env_keep+=SSH_AUTH_SOCK" >> /etc/sudoers
 
