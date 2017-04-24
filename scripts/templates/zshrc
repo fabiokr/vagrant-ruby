@@ -21,14 +21,23 @@ compinit
 
 # ls alias to enable colors by default
 alias ls="${aliases[ls]:-ls} --color=auto"
+alias g="git"
 
 # include vagrant user rubygems on PATH
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 # Prompt format
-autoload -Uz promptinit
-promptinit
-setopt promptsubst
+git_prompt_info() {
+  git symbolic-ref --short HEAD
+}
 
-PROMPT='%K{blue}%n%k %B%F{green}%~ $%b '
+get_git_dirty() {
+  git diff --quiet || echo '⚡'
+}
+
+autoload -Uz promptinit
+setopt prompt_subst
+promptinit
+
+PROMPT='%K{blue}%n%k %B%F{green}%~ %B%F{cyan}($(git_prompt_info)%f) %F{yellow}$(get_git_dirty)%f $%b '
 RPROMPT='%D{%H:%M:%S}'
