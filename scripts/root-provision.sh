@@ -25,6 +25,10 @@ add-apt-repository --yes ppa:brightbox/ruby-ng
 apt_ppa_repository_with_key "/etc/apt/sources.list.d/postgresql.list" "https://www.postgresql.org/media/keys/ACCC4CF8.asc" "deb http://apt.postgresql.org/pub/repos/apt/ $UBUNTU_CODENAME-pgdg main"
 apt_ppa_repository_with_key "/etc/apt/sources.list.d/passenger.list" "http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x561F9B9CAC40B2F7" "deb https://oss-binaries.phusionpassenger.com/apt/passenger $UBUNTU_CODENAME main"
 
+# Mysql credentials
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+
 echo "Updating repositories..."
 apt-get update
 
@@ -71,6 +75,17 @@ packages=(
   postgresql-contrib-9.4
   # postgres driver lib
   libpq-dev
+
+  # mysql server
+  mysql-server
+  # mysql driver lib
+  libmysqlclient-dev
+
+  # sqlite server
+  sqlite3
+  # sqlite driver lib
+  libsqlite3-dev
+
   # key store server
   redis-server
 
