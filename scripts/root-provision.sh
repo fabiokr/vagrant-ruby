@@ -128,6 +128,11 @@ sudo -u postgres bash -c "psql -c \"CREATE USER vagrant WITH SUPERUSER PASSWORD 
 sudo -u postgres bash -c "psql -c \"SELECT datname FROM pg_database WHERE encoding = pg_char_to_encoding('UTF8') AND datcollate = 'en_US.utf8' AND datctype = 'en_US.utf8'\""
 sudo -u postgres bash -c "psql -c \"UPDATE pg_database SET encoding = pg_char_to_encoding('UTF8'), datcollate = 'en_US.utf8', datctype = 'en_US.utf8' WHERE datname = 'template1';\""
 
+# allow incoming connections
+echo "listen_addresses = '*'" >> /etc/postgresql/9.4/main/postgresql.conf
+echo "host    all             all             samenet          md5" >> /etc/postgresql/9.4/main/pg_hba.conf
+service postgresql restart
+
 echo "Setting up Passenger"
 rm /etc/nginx/nginx.conf
 cp /tmp/provision/nginx.conf /etc/nginx/nginx.conf
