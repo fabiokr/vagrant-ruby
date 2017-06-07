@@ -34,3 +34,6 @@ promptinit
 
 PROMPT='%K{blue}%n%k %B%F{green}%~ $%b '
 RPROMPT='%D{%H:%M:%S}'
+
+# Xvfb display for Chrome
+DISPLAY=:99

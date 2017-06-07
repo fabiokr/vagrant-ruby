@@ -24,6 +24,7 @@ add-apt-repository --yes ppa:brightbox/ruby-ng
 
 apt_ppa_repository_with_key "/etc/apt/sources.list.d/postgresql.list" "https://www.postgresql.org/media/keys/ACCC4CF8.asc" "deb http://apt.postgresql.org/pub/repos/apt/ $UBUNTU_CODENAME-pgdg main"
 apt_ppa_repository_with_key "/etc/apt/sources.list.d/passenger.list" "http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x561F9B9CAC40B2F7" "deb https://oss-binaries.phusionpassenger.com/apt/passenger $UBUNTU_CODENAME main"
+apt_ppa_repository_with_key "/etc/apt/sources.list.d/google.list" "https://dl-ssl.google.com/linux/linux_signing_key.pub" "deb http://dl.google.com/linux/chrome/deb/ stable main"
 
 # Mysql credentials
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
@@ -43,6 +44,8 @@ packages=(
   make
   # makefiles
   automake
+  # unzip
+  unzip
 
   # ruby libs dependencies
   libssl-dev
@@ -115,6 +118,10 @@ packages=(
 
   # nfs client
   nfs-common
+
+  # chrome
+  google-chrome-stable
+  xvfb
 )
 
 apt -y -qq install ${packages[@]}
@@ -140,10 +147,14 @@ chmod 0644 /etc/nginx/nginx.conf
 
 service nginx restart
 
-echo "Setting up Phantomjs"
+echo "Setting up Xvfb"
+cp /tmp/provision/Xvfb.service /etc/systemd/system/
+chmod +x /etc/systemd/system/Xvfb.service
+systemctl enable Xvfb.service
+systemctl start Xvfb.service
+
+echo "Setting up the Chrome driver"
 cd /tmp
-PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
-wget "https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2"
-tar xvjf "$PHANTOM_JS.tar.bz2"
-mv "$PHANTOM_JS" /usr/local/share
-ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
+wget "https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip"
+unzip chromedriver_linux64.zip
+mv chromedriver /usr/local/bin
