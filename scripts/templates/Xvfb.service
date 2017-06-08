@@ -3,7 +3,8 @@ Description=X Virtual Frame Buffer Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/Xvfb :99 -screen 0 1920x1080x24
+ExecStart=/usr/bin/Xvfb :1 -screen 0 1920x1080x24 -ac
+User=vagrant
 
 [Install]
 WantedBy=multi-user.target
